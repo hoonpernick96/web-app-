@@ -12,4 +12,4 @@ elif choice == 'timeshift':
     timeshift.drawTimeShiftPage()
 
 elif choice == '대검찰청_범죄발생지':
-    crimeLocation.drawCrimeLocationShiftPage()
+    crimeLocation.drawCrimeLocationPage()
