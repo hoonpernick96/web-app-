@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import pandas as pd
 import os
+import matplotlib.pyplot as plt
 
 def drawCrimeLocationPage():
     current_path = os.path.abspath(os.path.dirname(__file__))
@@ -95,6 +96,18 @@ def drawCrimeLocationPage():
     df.reset_index(drop=True, inplace=True)
     col1.dataframe(df, 1000, 7200)
     # print([csv_read['범죄분류'], csv_read[choice]])
+
+    x = df['범죄분류']
+    y = df[choice]
+    plt.plot()
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    ax.scatter(
+        x,
+        y,
+    )
+
+    col2.write(fig)
 
 
 
