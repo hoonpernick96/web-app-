@@ -2,6 +2,8 @@ import streamlit as st
 import random
 import os
 from PIL import Image
+from playsound import playsound
+
 
 def getRandomNum():
     ss = st.session_state
@@ -20,6 +22,12 @@ def getImage(image1):
     image_file = os.path.join(current_path, '..', 'Resources', image1)
     return image_file
 
+def getMusic(music1):
+    current_path = os.path.abspath(os.path.dirname(__file__))
+    music_file = os.path.join(current_path, '..', 'Resources', music1)
+    return music_file
+
+
 def drawUpDownPage():
     ss = st.session_state
 
@@ -33,30 +41,33 @@ def drawUpDownPage():
         num = ss["Computer Number"]
     if start_button:
         getRandomNum()
+        st.session_state["key1"]=''
     body = container1.container()
     footer = container1.container()
-    num1 = body.text_input("숫자를 입력하세요(1 ~ 100000)", disabled = disabledOrNot())
+    num1 = body.text_input("숫자를 입력하세요(1 ~ 100000)", disabled = disabledOrNot(), key = "key1")
     num1 = num1.strip()
     if num1 != '':
         num1 = int(num1)
     submit_button = body.button("submit", disabled=(num1 == ''))
-    if submit_button:
+    if submit_button or num1:
         if num == num1:
             image1 = Image.open(getImage("correct.jpg"))
-            footer.image(image1, caption='정답입니다!!!!!!')
+            footer.image(image1, caption='정답입니다!!!!!!', width = 340)
+            footer.write(getMusic("correct1.mp3"))
+            playsound(getMusic("correct1.mp3"))
 
         elif num != num1:
             if num > num1:
                 image1 = Image.open(getImage("UP.jpg"))
-                footer.image(image1, caption = 'Up')
+                footer.image(image1, caption = 'Up', width = 340)
+                footer.write(getMusic("biggerNumber.mp3"))
+                playsound(getMusic("biggerNumber.mp3"))
+
             else:
                 image1 = Image.open(getImage("DOWN.png"))
-                footer.image(image1, caption='Down')
-
-
-
-
-
+                footer.image(image1, caption='Down', width = 340)
+                footer.write(getMusic("smallerNumber.mp3"))
+                playsound(getMusic("smallerNumber.mp3"))
 
 
 
